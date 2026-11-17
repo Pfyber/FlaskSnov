@@ -1,0 +1,237 @@
+
+<!DOCTYPE html>
+<html lang="sl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Met kocke 🎲</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            font-family: 'Outfit', sans-serif;
+            color: white;
+
+            background:
+                radial-gradient(circle at 20% 20%, #7928ca 0%, transparent 40%),
+                radial-gradient(circle at 80% 80%, #007cf0 0%, transparent 40%),
+                linear-gradient(135deg, #090916, #15152e, #090916);
+
+            background-size: 200% 200%;
+            animation: backgroundMove 10s ease infinite;
+        }
+
+        body::before,
+        body::after {
+            content: '';
+            position: fixed;
+            width: 350px;
+            height: 350px;
+            border-radius: 50%;
+            filter: blur(130px);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        body::before {
+            background: #8b5cf6;
+            opacity: .35;
+            top: 10%;
+            left: 10%;
+            animation: float 7s ease-in-out infinite;
+        }
+
+        body::after {
+            background: #00c6ff;
+            opacity: .25;
+            bottom: 5%;
+            right: 10%;
+            animation: float 9s ease-in-out infinite reverse;
+        }
+
+        .game-card {
+            position: relative;
+            z-index: 1;
+            width: min(90%, 450px);
+            padding: 55px 35px;
+            text-align: center;
+
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 35px;
+
+            box-shadow:
+                0 25px 80px rgba(0, 0, 0, 0.4),
+                inset 0 1px 1px rgba(255, 255, 255, 0.15);
+
+            animation: cardAppear 1s ease;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 9px 18px;
+            border-radius: 50px;
+
+            background: rgba(139, 92, 246, 0.2);
+            border: 1px solid rgba(167, 139, 250, 0.4);
+
+            color: #c4b5fd;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 3px;
+        }
+
+        h1 {
+            margin-top: 25px;
+            font-size: 42px;
+            font-weight: 900;
+            letter-spacing: -2px;
+
+            background: linear-gradient(90deg, #fff, #c4b5fd, #67e8f9);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+
+        .subtitle {
+            margin-top: 10px;
+            color: #aaa9c5;
+            font-size: 16px;
+        }
+
+        .dice {
+            margin: 40px auto 25px;
+            width: 150px;
+            height: 150px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 30px;
+
+            background: linear-gradient(145deg, #8b5cf6, #4f46e5);
+
+            font-size: 85px;
+            font-weight: 900;
+            color: white;
+
+            box-shadow:
+                0 15px 40px rgba(99, 102, 241, 0.5),
+                inset 0 3px 8px rgba(255, 255, 255, 0.3);
+
+            animation: diceAppear .7s cubic-bezier(.2, 1.5, .5, 1);
+        }
+
+        .result {
+            color: #c4b5fd;
+            font-size: 17px;
+            font-weight: 600;
+        }
+
+        .footer {
+            margin-top: 35px;
+            color: #777791;
+            font-size: 12px;
+            letter-spacing: 2px;
+        }
+
+        @keyframes backgroundMove {
+            0%, 100% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) scale(1);
+            }
+            50% {
+                transform: translateY(-40px) scale(1.15);
+            }
+        }
+
+        @keyframes diceAppear {
+            0% {
+                transform: scale(0.3) rotate(-180deg);
+                opacity: 0;
+            }
+            100% {
+                transform: scale(1) rotate(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes cardAppear {
+            from {
+                transform: translateY(40px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .game-card {
+                padding: 40px 22px;
+            }
+
+            h1 {
+                font-size: 35px;
+            }
+
+            .dice {
+                width: 130px;
+                height: 130px;
+                font-size: 75px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <main class="game-card">
+
+        <div class="tag">🎲 DICE GAME</div>
+
+        <h1>Met kocke</h1>
+
+        <p class="subtitle">Tvoja sreča, tvoj met.</p>
+
+        <div class="dice">
+            {{ kocka }}
+        </div>
+
+        <p class="result">Vrgel si kocko!</p>
+
+        <div class="footer">
+            GOOD LUCK • HAVE FUN
+        </div>
+
+    </main>
+
+</body>
+</html>
